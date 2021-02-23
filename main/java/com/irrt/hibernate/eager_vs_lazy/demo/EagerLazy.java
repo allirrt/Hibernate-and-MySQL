@@ -2,6 +2,7 @@ package com.irrt.hibernate.eager_vs_lazy.demo;
 
 import com.irrt.hibernate.eager_vs_lazy.entity.Instructor;
 import com.irrt.hibernate.eager_vs_lazy.entity.InstructorDetail;
+import com.irrt.hibernate.many_to_many.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

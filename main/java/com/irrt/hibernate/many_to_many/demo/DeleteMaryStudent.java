@@ -1,17 +1,11 @@
-package com.irrt.hibernate.many_to_many;
-
-
-import com.irrt.hibernate.one_to_many.demo.Course;
-import com.irrt.hibernate.one_to_many.demo.Instructor;
-import com.irrt.hibernate.one_to_many.demo.InstructorDetail;
-import com.irrt.hibernate.one_to_many.demo.Review;
+package com.irrt.hibernate.many_to_many.demo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import com.irrt.hibernate.many_to_many.entity.*;
 
 
-
-public class CreateCourseAndReviews {
+public class DeleteMaryStudent {
 
     public static void main(String[] args) {
 
@@ -22,6 +16,7 @@ public class CreateCourseAndReviews {
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
                 .addAnnotatedClass(Review.class)
+                .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
         // create session
@@ -32,21 +27,16 @@ public class CreateCourseAndReviews {
             // start a transaction
             session.beginTransaction();
 
+            // get the student from database
+            int studentId = 2;
+            Student tempStudent = session.get(Student.class, studentId);
 
-            // create a course
-            Course tempCourse = new Course("Pacman - How To Score One Million Points");
+            System.out.println("\nLoaded student: " + tempStudent);
+            System.out.println("\nCourses: " + tempStudent.getCourses());
 
-            // add some reviews
-            tempCourse.addReview(new Review("Great course ... loved it!"));
-            tempCourse.addReview(new Review("Cool course, job well done"));
-            tempCourse.addReview(new Review("What a dumb course, you are an idiot!"));
-
-            // save the course ... and leverage the cascade all :-)
-            System.out.println("Saving the course");
-            System.out.println(tempCourse);
-            System.out.println(tempCourse.getReviews());
-
-            session.save(tempCourse);
+            // delete student
+            System.out.println("\nDeleting student: " + tempStudent);
+            session.delete(tempStudent);
 
             // commit transaction
             session.getTransaction().commit();
@@ -63,4 +53,3 @@ public class CreateCourseAndReviews {
     }
 
 }
-
