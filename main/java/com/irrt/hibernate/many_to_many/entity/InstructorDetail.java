@@ -1,4 +1,4 @@
-package com.irrt.hibernate.one_to_many.demo;
+package com.irrt.hibernate.many_to_many.entity;
 
 import javax.persistence.*;
 
@@ -33,8 +33,9 @@ public class InstructorDetail {
 
     // add @OneToOne annotation
 
-    @OneToOne(mappedBy="instructorDetail", cascade={CascadeType.DETACH,
-    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
+    @OneToOne(mappedBy="instructorDetail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH})
     private Instructor instructor;
 
 

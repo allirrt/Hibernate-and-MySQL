@@ -1,10 +1,14 @@
-package com.irrt.hibernate.one_to_many.demo;
+package com.irrt.hibernate.one_to_many_uni.demo;
 
+import com.irrt.hibernate.one_to_many_uni.entity.Course;
+import com.irrt.hibernate.one_to_many_uni.entity.Instructor;
+import com.irrt.hibernate.one_to_many_uni.entity.InstructorDetail;
+import com.irrt.hibernate.one_to_many_uni.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteCourse {
+public class GetCourseAndReviews {
     public static void main(String[] args) {
 
         // create session factory
@@ -13,6 +17,7 @@ public class DeleteCourse {
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)
                 .buildSessionFactory();
 
         // create session
@@ -23,14 +28,15 @@ public class DeleteCourse {
             // start a transaction
             session.beginTransaction();
 
-            // get a course
+            // get the course
             int theId = 10;
             Course tempCourse = session.get(Course.class, theId);
 
-            // delete course
-            System.out.println("Deleting course: " + tempCourse);
+            // print the course
+            System.out.println(tempCourse);
 
-            session.delete(tempCourse);
+            // print the course reviews
+            System.out.println(tempCourse.getReviews());
 
             // commit transaction
             session.getTransaction().commit();
@@ -47,5 +53,6 @@ public class DeleteCourse {
     }
 
 }
+
 
 

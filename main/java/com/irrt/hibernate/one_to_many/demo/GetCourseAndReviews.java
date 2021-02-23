@@ -1,13 +1,10 @@
 package com.irrt.hibernate.one_to_many.demo;
 
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
-public class CreateInstructor {
-
+public class GetCourseAndReviews {
     public static void main(String[] args) {
 
         // create session factory
@@ -16,6 +13,7 @@ public class CreateInstructor {
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)
                 .buildSessionFactory();
 
         // create session
@@ -23,28 +21,18 @@ public class CreateInstructor {
 
         try {
 
-            // create the objects
-            Instructor tempInstructor =
-                    new Instructor("Susan", "Public", "bbc@google.com");
-
-            InstructorDetail tempInstructorDetail =
-                    new InstructorDetail(
-                            "http://www.youtube.com",
-                            "Video Games");
-
-            // associate the objects
-            tempInstructor.setInstructorDetail(tempInstructorDetail);
-
             // start a transaction
             session.beginTransaction();
 
-            // save the instructor
-            //
-            // Note: this will ALSO save the details object
-            // because of CascadeType.ALL
-            //
-            System.out.println("Saving instructor: " + tempInstructor);
-            session.save(tempInstructor);
+            // get the course
+            int theId = 10;
+            Course tempCourse = session.get(Course.class, theId);
+
+            // print the course
+            System.out.println(tempCourse);
+
+            // print the course reviews
+            System.out.println(tempCourse.getReviews());
 
             // commit transaction
             session.getTransaction().commit();
@@ -61,3 +49,6 @@ public class CreateInstructor {
     }
 
 }
+
+
+
